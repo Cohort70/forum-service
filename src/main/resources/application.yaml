@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: forum-service
+  #PostgreSQL by aiven.io
+  datasource:
+    url: jdbc:postgresql://cohort70-eddfish-eddfish.h.aivencloud.com:22423/defaultdb
+    username: avnadmin
+    password: ${AIVEN_PASS}
+  #Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
