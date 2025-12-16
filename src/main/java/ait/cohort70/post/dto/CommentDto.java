@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class CommentDto {
-    private String user;
+    @JsonProperty("user")
+    private String username;
     private String message;
     private LocalDateTime dateCreated;
     private Integer likes;
