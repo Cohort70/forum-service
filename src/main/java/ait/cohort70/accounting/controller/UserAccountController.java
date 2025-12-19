@@ -47,7 +47,7 @@ public class UserAccountController {
 
     @PatchMapping("/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changePassword(Principal principal, @RequestBody NewPasswordDto newPasswordDto) {
+    public void changePassword(Principal principal, @RequestBody @Valid NewPasswordDto newPasswordDto) {
        userAccountService.changePassword(principal.getName(), newPasswordDto.getPassword());
     }
 
