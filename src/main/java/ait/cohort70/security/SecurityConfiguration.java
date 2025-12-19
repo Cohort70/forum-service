@@ -29,7 +29,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/account/register", "/forum/posts/**")
+                .requestMatchers("/account/register", "/forum/posts/**", "/error")
                     .permitAll()
                 .requestMatchers("/account/user/{login}/role/{role}")
                     .hasRole(Role.ADMINISTRATOR.name())
