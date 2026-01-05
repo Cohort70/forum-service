@@ -3,6 +3,7 @@ package ait.cohort70.post.service;
 import ait.cohort70.post.dto.NewCommentDto;
 import ait.cohort70.post.dto.NewPostDto;
 import ait.cohort70.post.dto.PostDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,4 +26,6 @@ public interface PostService {
     Iterable<PostDto> findPostsByTags(List<String> tags);
 
     Iterable<PostDto> findPostsByPeriod(LocalDate dateFrom, LocalDate dateTo);
+
+    void addFileToPost(Long id, MultipartFile file);
 }

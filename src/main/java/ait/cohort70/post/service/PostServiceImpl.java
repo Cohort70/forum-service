@@ -1,12 +1,14 @@
 package ait.cohort70.post.service;
 
 import ait.cohort70.post.dao.CommentRepository;
+import ait.cohort70.post.dao.FileRepository;
 import ait.cohort70.post.dao.PostRepository;
 import ait.cohort70.post.dao.TagRepository;
 import ait.cohort70.post.dto.NewCommentDto;
 import ait.cohort70.post.dto.NewPostDto;
 import ait.cohort70.post.dto.PostDto;
 import ait.cohort70.post.dto.exception.PostNotFoundException;
+import ait.cohort70.post.model.AttachedFile;
 import ait.cohort70.post.model.Comment;
 import ait.cohort70.post.model.Post;
 import ait.cohort70.post.model.Tag;
@@ -15,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,10 +28,11 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
     private final CommentRepository commentRepository;
+    private final FileRepository fileRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -84,6 +89,19 @@ public class PostServiceImpl implements PostService{
         comment.setPost(post);
         commentRepository.save(comment);
         return modelMapper.map(post, PostDto.class);
+    }
+
+    @Override
+    @Transactional
+    public void addFileToPost(Long id, MultipartFile file) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        try {
+            AttachedFile attachedFile = new AttachedFile(file.getOriginalFilename(), file.getContentType(), file.getBytes());
+            attachedFile.setPost(post);
+            fileRepository.save(attachedFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -64,5 +65,11 @@ public class PostController {
     @GetMapping("/posts/period")
     public Iterable<PostDto> findPostsByPeriod(@RequestParam("dateFrom") @NotNull(message = "Date from cannot be null") LocalDate from, @RequestParam("dateTo") @NotNull(message = "Date to cannot be null") LocalDate to) {
         return postService.findPostsByPeriod(from, to);
+    }
+
+    @PatchMapping("/post/{id}/file")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addFileToPost(@PathVariable Long id, @RequestParam("file")  MultipartFile file){
+        postService.addFileToPost(id, file);
     }
 }

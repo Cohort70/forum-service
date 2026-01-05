@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                     .access(new WebExpressionAuthorizationManager("#login == authentication.name or hasRole('ADMINISTRATOR')"))
                 .requestMatchers(HttpMethod.POST, "/forum/post/{author}")
                     .access(new WebExpressionAuthorizationManager("#author == authentication.name"))
-                .requestMatchers(HttpMethod.PATCH, "/forum/post/{id}")
+                .requestMatchers(HttpMethod.PATCH, "/forum/post/{id}", "/forum/post/{id}/file")
                     .access((authentication, context) ->
                             new AuthorizationDecision(webSecurity.isPostOwner(authentication.get().getName(), context.getVariables().get("id"))))
                 .requestMatchers(HttpMethod.DELETE, "/forum/post/{id}")
