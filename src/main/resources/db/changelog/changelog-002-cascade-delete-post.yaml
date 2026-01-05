@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-drop-fk-comments-posts
+      author: edward
+      preConditions:
+        - foreignKeyConstraintExists:
+            foreignKeyName: fk_comments_posts
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: comments
+            constraintName: fk_comments_posts
+  - changeSet:
+      id: 02-add-fk-comments-posts-cascade
+      author: edward
+      changes:
+        - addForeignKeyConstraint:
+            constraintName: fk_comments_posts
+            baseTableName: comments
+            baseColumnNames: post_id
+            referencedTableName: posts
+            referencedColumnNames: id
+            onDelete: CASCADE
