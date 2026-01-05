@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/account/register", "/forum/posts/**")
                     .permitAll()
-                .requestMatchers("/account/user/{login}/role/{role}")
+                .requestMatchers("/account/user/{login}/role/{role}", "/account/email")
                     .hasRole(Role.ADMINISTRATOR.name())
                 .requestMatchers(HttpMethod.PATCH, "/account/user/{login}", "/forum/post/{id}/comment/{login}")
                     .access(new WebExpressionAuthorizationManager("#login == authentication.name"))
