@@ -1,5 +1,6 @@
 package ait.cohort70.post.service;
 
+import ait.cohort70.post.dto.FileDto;
 import ait.cohort70.post.dto.NewCommentDto;
 import ait.cohort70.post.dto.NewPostDto;
 import ait.cohort70.post.dto.PostDto;
@@ -28,4 +29,6 @@ public interface PostService {
     Iterable<PostDto> findPostsByPeriod(LocalDate dateFrom, LocalDate dateTo);
 
     void addFileToPost(Long id, MultipartFile file);
+
+    Iterable<FileDto> getFilesByPostId(Long id);
 }

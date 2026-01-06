@@ -4,6 +4,7 @@ import ait.cohort70.post.dao.CommentRepository;
 import ait.cohort70.post.dao.FileRepository;
 import ait.cohort70.post.dao.PostRepository;
 import ait.cohort70.post.dao.TagRepository;
+import ait.cohort70.post.dto.FileDto;
 import ait.cohort70.post.dto.NewCommentDto;
 import ait.cohort70.post.dto.NewPostDto;
 import ait.cohort70.post.dto.PostDto;
@@ -102,6 +103,15 @@ public class PostServiceImpl implements PostService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<FileDto> getFilesByPostId(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        return post.getFiles().stream()
+                .map(f -> modelMapper.map(f, FileDto.class))
+                .toList();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ait.cohort70.post.controller;
 
+import ait.cohort70.post.dto.FileDto;
 import ait.cohort70.post.dto.NewCommentDto;
 import ait.cohort70.post.dto.NewPostDto;
 import ait.cohort70.post.dto.PostDto;
@@ -71,5 +72,10 @@ public class PostController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addFileToPost(@PathVariable Long id, @RequestParam("file")  MultipartFile file){
         postService.addFileToPost(id, file);
+    }
+
+    @GetMapping("/post/{id}/files")
+    public Iterable<FileDto> getFilesByPostId(@PathVariable Long id) {
+        return postService.getFilesByPostId(id);
     }
 }
